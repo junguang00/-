@@ -31,4 +31,6 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    //自定义圆形图片组件
+    compile 'com.pkmmte.view:circularimageview:1.1'
 }
