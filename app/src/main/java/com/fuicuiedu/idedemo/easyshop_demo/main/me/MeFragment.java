@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.ActivityUtils;
+import com.fuicuiedu.idedemo.easyshop_demo.user.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +56,6 @@ public class MeFragment extends Fragment {
     @OnClick({R.id.iv_user_head, R.id.tv_person_info, R.id.tv_login, R.id.tv_person_goods, R.id.tv_goods_upload})
     public void onClick() {
         // TODO: 2016/11/16 判断用户是否登录，来确定跳转位置
-//        activityUtils.startActivity(LoginActivity.class);
+        activityUtils.startActivity(LoginActivity.class);
     }
 }

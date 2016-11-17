@@ -2,10 +2,11 @@
 <resources>
     <color name="colorPrimary">#ff5000</color>
     <color name="colorPrimaryDark">#ff5000</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff7700</color>
 
     <color name="white">#FFFFFF</color>
     <color name="bg_page">#ebebeb</color>
     <color name="text_goods_name">#3e4346</color>
     <color name="text_goods_describe">#676767</color>
+    <color name="text_hint">#999999</color>
 </resources>
