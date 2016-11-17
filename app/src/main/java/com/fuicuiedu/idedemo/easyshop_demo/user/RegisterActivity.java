@@ -12,13 +12,23 @@ import android.widget.EditText;
 
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.ActivityUtils;
+import com.fuicuiedu.idedemo.easyshop_demo.commons.LogUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.RegexUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.components.AlertDialogFragment;
 import com.fuicuiedu.idedemo.easyshop_demo.components.ProgressDialogFragment;
+import com.fuicuiedu.idedemo.easyshop_demo.model.UserResult;
+import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
+import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
+import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -100,6 +110,22 @@ public class RegisterActivity extends AppCompatActivity {
         }
         // TODO: 2016/11/17 0017 执行注册的网络请求
         activityUtils.showToast("注册的网络请求待实现");
+        EasyShopClient.getInstance().register(username,password).enqueue(new UICallback() {
+            @Override
+            public void onFailureInUi(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponseInUi(Call call, String body) {
+                UserResult userResult = new Gson().fromJson(body,UserResult.class);
+                if (userResult.getCode() == 1){
+                    activityUtils.showToast("注册成功，" + "message = " + userResult.getMessage());
+                }else if (userResult.getCode() == 2){
+                    activityUtils.showToast("注册失败，" + "message = " + userResult.getMessage());
+                }
+            }
+        });
     }
 
     //显示错误提示
