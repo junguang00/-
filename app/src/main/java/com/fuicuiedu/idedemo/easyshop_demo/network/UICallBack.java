@@ -4,6 +4,8 @@ package com.fuicuiedu.idedemo.easyshop_demo.network;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.fuicuiedu.idedemo.easyshop_demo.commons.LogUtils;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -33,6 +35,7 @@ public abstract class UICallback implements Callback {
             }
 
             final String content = response.body().string();
+            LogUtils.e("响应体：" + content);
             handler.post(new Runnable() {
                 @Override
                 public void run() {

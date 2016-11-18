@@ -21,6 +21,9 @@ import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
 import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -118,12 +121,15 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onResponseInUi(Call call, String body) {
-                UserResult userResult = new Gson().fromJson(body,UserResult.class);
-                if (userResult.getCode() == 1){
-                    activityUtils.showToast("注册成功，" + "message = " + userResult.getMessage());
-                }else if (userResult.getCode() == 2){
-                    activityUtils.showToast("注册失败，" + "message = " + userResult.getMessage());
+                try {
+                    JSONObject jsonObject = new JSONObject(body);
+                    int code = jsonObject.getInt("code");
+                    String msg = jsonObject.getString("msg");
+                    LogUtils.e("解析数据：int=" + code + ",msg=" + msg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
             }
         });
     }

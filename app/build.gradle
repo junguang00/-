@@ -34,6 +34,8 @@ dependencies {
     compile 'com.pkmmte.view:circularimageview:1.1'
     //OkHttp
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    //OkHttp日志拦截器
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //Gson
     compile 'com.google.code.gson:gson:2.8.0'
 }

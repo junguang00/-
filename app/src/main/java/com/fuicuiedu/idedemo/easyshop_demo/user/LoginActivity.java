@@ -1,7 +1,7 @@
 package com.fuicuiedu.idedemo.easyshop_demo.user;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -10,17 +10,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.ActivityUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.components.ProgressDialogFragment;
+import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
+import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 public class LoginActivity extends AppCompatActivity {
-
     @BindView(R.id.et_username)
     EditText et_userName;
     @BindView(R.id.et_pwd)
@@ -44,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         et_userName.addTextChangedListener(textWatcher);
         et_pwd.addTextChangedListener(textWatcher);
         if (dialogFragment == null) dialogFragment = new ProgressDialogFragment();
@@ -90,12 +96,24 @@ public class LoginActivity extends AppCompatActivity {
             case R.id.btn_login:
                 // TODO: 2016/11/17 0017 执行登录的网络请求
                 activityUtils.showToast("登录的网络请求待实现");
+
+                Call call = EasyShopClient.getInstance().login_demo(username,password);
+                call.enqueue(new UICallback() {
+                    @Override
+                    public void onFailureInUi(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponseInUi(Call call, String body) {
+
+                    }
+                });
+
                 break;
             case R.id.tv_register:
                 activityUtils.startActivity(RegisterActivity.class);
                 break;
         }
     }
-
-
 }
