@@ -27,7 +27,6 @@ public class EasyShopClient {
 
         okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
-                .addInterceptor(new BombInterceptor())
                 .build();
     }
 
@@ -59,51 +58,22 @@ public class EasyShopClient {
     }
 
     /**
-     * 注册
+     * 登录
      * <p>
      * post
      *
-     * @param UserName 用户名
-     * @param Password 秘密
+     * @param username 用户名
+     * @param password 秘密
      */
-    public Call register_demo(String UserName, String Password){
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("username", UserName);
-            jsonObject.put("password", Password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RequestBody requestBody = RequestBody.create(null, jsonObject.toString());
-
+    public Call login(String username, String password) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("username", username)
+                .add("password", password)
+                .build();
         Request request = new Request.Builder()
-                .url(EasyShopApi_Demo.REGISTER)
+                .url(EasyShopApi.BASE_URL + EasyShopApi.LOGIN)
                 .post(requestBody)
                 .build();
         return okHttpClient.newCall(request);
     }
-
-    /**
-     * 登录
-     * <p>
-     * GET
-     *
-     * // URL编码参数
-     "username"=username
-     "password"=password
-     */
-    public Call login_demo(String username, String password){
-
-        Request request = new Request.Builder()
-                .url(EasyShopApi_Demo.LOGIN +
-                        "?username=" + username +
-                        "&password=" + password
-                    )
-                .get()
-                .build();
-        return okHttpClient.newCall(request);
-    }
-
-
 }

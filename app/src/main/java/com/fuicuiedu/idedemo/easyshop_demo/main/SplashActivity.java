@@ -20,6 +20,9 @@ public class SplashActivity extends AppCompatActivity {
 
         utils = new ActivityUtils(this);
 
+        // TODO: 2016/11/17 0017 登录账号冲突
+        // TODO: 2016/11/17 0017 判断用户是否登录
+
         Timer timer = new Timer();
         //1.5秒后跳转到主页面并且finish
         timer.schedule(new TimerTask() {

@@ -16,8 +16,12 @@ import android.widget.TextView;
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.ActivityUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.components.ProgressDialogFragment;
+import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
+import com.fuicuiedu.idedemo.easyshop_demo.model.User;
+import com.fuicuiedu.idedemo.easyshop_demo.model.UserResult;
 import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
 import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -94,19 +98,30 @@ public class LoginActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                // TODO: 2016/11/17 0017 执行登录的网络请求
-                activityUtils.showToast("登录的网络请求待实现");
-
-                Call call = EasyShopClient.getInstance().login_demo(username,password);
+                Call call = EasyShopClient.getInstance().login(username,password);
                 call.enqueue(new UICallback() {
                     @Override
                     public void onFailureInUi(Call call, IOException e) {
-
+                        activityUtils.showToast(e.getMessage());
                     }
 
                     @Override
                     public void onResponseInUi(Call call, String body) {
+                        UserResult userResult = new Gson().fromJson(body,UserResult.class);
+                        if (userResult.getCode() == 1) {
+                            activityUtils.showToast("登录成功！");
+                            //拿到用户的实体类
+                            User user = userResult.getData();
+                            //用户信息保存到本地缓存中
+                            CachePreferences.setUser(user);
 
+                            // TODO: 2016/11/21 0021 页面跳转待实现，使用eventbus
+                            // TODO: 2016/11/21 0021 还需要登录环信，待实现
+                        } else if (userResult.getCode() == 2) {
+                            activityUtils.showToast(userResult.getMessage());
+                        } else{
+                            activityUtils.showToast("未知错误");
+                        }
                     }
                 });
 

@@ -10,4 +10,7 @@ public class EasyShopApi {
 
     //注册借口
     static String REGISTER = "UserWeb?method=register";
+
+    //登录接口
+    static String LOGIN = "UserWeb?method=login";
 }

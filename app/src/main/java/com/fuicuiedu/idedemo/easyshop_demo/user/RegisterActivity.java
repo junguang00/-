@@ -16,6 +16,8 @@ import com.fuicuiedu.idedemo.easyshop_demo.commons.LogUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.RegexUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.components.AlertDialogFragment;
 import com.fuicuiedu.idedemo.easyshop_demo.components.ProgressDialogFragment;
+import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
+import com.fuicuiedu.idedemo.easyshop_demo.model.User;
 import com.fuicuiedu.idedemo.easyshop_demo.model.UserResult;
 import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
 import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
@@ -111,25 +113,30 @@ public class RegisterActivity extends AppCompatActivity {
             showUserPasswordError(msg);
             return;
         }
-        // TODO: 2016/11/17 0017 执行注册的网络请求
-        activityUtils.showToast("注册的网络请求待实现");
         EasyShopClient.getInstance().register(username,password).enqueue(new UICallback() {
             @Override
             public void onFailureInUi(Call call, IOException e) {
-
+                activityUtils.showToast(e.getMessage());
             }
 
             @Override
             public void onResponseInUi(Call call, String body) {
-                try {
-                    JSONObject jsonObject = new JSONObject(body);
-                    int code = jsonObject.getInt("code");
-                    String msg = jsonObject.getString("msg");
-                    LogUtils.e("解析数据：int=" + code + ",msg=" + msg);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                //拿到返回结果
+                UserResult userResult = new Gson().fromJson(body,UserResult.class);
+                if (userResult.getCode() == 1) {
+                    activityUtils.showToast("注册成功！");
+                    //拿到用户的实体类
+                    User user = userResult.getData();
+                    //用户信息保存到本地缓存中
+                    CachePreferences.setUser(user);
 
+                    // TODO: 2016/11/21 0021 页面跳转待实现，使用eventbus 
+                    // TODO: 2016/11/21 0021 还需要登录环信，待实现
+                } else if (userResult.getCode() == 2) {
+                    activityUtils.showToast(userResult.getMessage());
+                } else{
+                    activityUtils.showToast("未知错误");
+                }
             }
         });
     }
