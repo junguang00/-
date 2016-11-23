@@ -1,5 +1,6 @@
-package com.fuicuiedu.idedemo.easyshop_demo.user;
+package com.fuicuiedu.idedemo.easyshop_demo.user.register;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,12 +17,14 @@ import com.fuicuiedu.idedemo.easyshop_demo.commons.LogUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.RegexUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.components.AlertDialogFragment;
 import com.fuicuiedu.idedemo.easyshop_demo.components.ProgressDialogFragment;
+import com.fuicuiedu.idedemo.easyshop_demo.main.MainActivity;
 import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
 import com.fuicuiedu.idedemo.easyshop_demo.model.User;
 import com.fuicuiedu.idedemo.easyshop_demo.model.UserResult;
 import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
 import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
 import com.google.gson.Gson;
+import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +38,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends MvpActivity<RegisterView,RegisterPersenter> implements RegisterView{
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -61,6 +64,13 @@ public class RegisterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         activityUtils = new ActivityUtils(this);
         init();
+    }
+
+    @NonNull
+    @Override
+    public RegisterPersenter createPresenter() {
+        //返回业务类
+        return new RegisterPersenter();
     }
 
     private void init(){
@@ -113,35 +123,42 @@ public class RegisterActivity extends AppCompatActivity {
             showUserPasswordError(msg);
             return;
         }
-        EasyShopClient.getInstance().register(username,password).enqueue(new UICallback() {
-            @Override
-            public void onFailureInUi(Call call, IOException e) {
-                activityUtils.showToast(e.getMessage());
-            }
+        presenter.register(username,password);
+    }
 
-            @Override
-            public void onResponseInUi(Call call, String body) {
-                //拿到返回结果
-                UserResult userResult = new Gson().fromJson(body,UserResult.class);
-                if (userResult.getCode() == 1) {
-                    activityUtils.showToast("注册成功！");
-                    //拿到用户的实体类
-                    User user = userResult.getData();
-                    //用户信息保存到本地缓存中
-                    CachePreferences.setUser(user);
+    @Override
+    public void showProgress() {
+        //关闭软键盘
+        activityUtils.hideSoftKeyboard();
+        if (dialogFragment == null) dialogFragment = new ProgressDialogFragment();
+        if (dialogFragment.isVisible()) return;
+        dialogFragment.show(getSupportFragmentManager(),"progress_dialog_fragment");
+    }
 
-                    // TODO: 2016/11/21 0021 页面跳转待实现，使用eventbus 
-                    // TODO: 2016/11/21 0021 还需要登录环信，待实现
-                } else if (userResult.getCode() == 2) {
-                    activityUtils.showToast(userResult.getMessage());
-                } else{
-                    activityUtils.showToast("未知错误");
-                }
-            }
-        });
+    @Override
+    public void hideProgress() {
+        dialogFragment.dismiss();
+    }
+
+    @Override
+    public void registerFailed() {
+        et_userName.setText("");
+    }
+
+    @Override
+    public void registerSuccess() {
+        //成功注册跳转到主页
+        activityUtils.startActivity(MainActivity.class);
+        finish();
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        activityUtils.showToast(msg);
     }
 
     //显示错误提示
+    @Override
     public void showUserPasswordError(String msg) {
         AlertDialogFragment fragment = AlertDialogFragment.newInstance(msg);
         fragment.show(getSupportFragmentManager(), getString(R.string.username_pwd_rule));

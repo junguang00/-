@@ -1,6 +1,7 @@
-package com.fuicuiedu.idedemo.easyshop_demo.user;
+package com.fuicuiedu.idedemo.easyshop_demo.user.login;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -15,13 +16,17 @@ import android.widget.TextView;
 
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.ActivityUtils;
+import com.fuicuiedu.idedemo.easyshop_demo.components.AlertDialogFragment;
 import com.fuicuiedu.idedemo.easyshop_demo.components.ProgressDialogFragment;
+import com.fuicuiedu.idedemo.easyshop_demo.main.MainActivity;
 import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
 import com.fuicuiedu.idedemo.easyshop_demo.model.User;
 import com.fuicuiedu.idedemo.easyshop_demo.model.UserResult;
 import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
 import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
+import com.fuicuiedu.idedemo.easyshop_demo.user.register.RegisterActivity;
 import com.google.gson.Gson;
+import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.io.IOException;
 
@@ -30,7 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends MvpActivity<LoginView,LoginPersenter> implements LoginView{
     @BindView(R.id.et_username)
     EditText et_userName;
     @BindView(R.id.et_pwd)
@@ -52,6 +57,12 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         activityUtils = new ActivityUtils(this);
         init();
+    }
+
+    @NonNull
+    @Override
+    public LoginPersenter createPresenter() {
+        return new LoginPersenter();
     }
 
     private void init() {
@@ -98,37 +109,41 @@ public class LoginActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                Call call = EasyShopClient.getInstance().login(username,password);
-                call.enqueue(new UICallback() {
-                    @Override
-                    public void onFailureInUi(Call call, IOException e) {
-                        activityUtils.showToast(e.getMessage());
-                    }
-
-                    @Override
-                    public void onResponseInUi(Call call, String body) {
-                        UserResult userResult = new Gson().fromJson(body,UserResult.class);
-                        if (userResult.getCode() == 1) {
-                            activityUtils.showToast("登录成功！");
-                            //拿到用户的实体类
-                            User user = userResult.getData();
-                            //用户信息保存到本地缓存中
-                            CachePreferences.setUser(user);
-
-                            // TODO: 2016/11/21 0021 页面跳转待实现，使用eventbus
-                            // TODO: 2016/11/21 0021 还需要登录环信，待实现
-                        } else if (userResult.getCode() == 2) {
-                            activityUtils.showToast(userResult.getMessage());
-                        } else{
-                            activityUtils.showToast("未知错误");
-                        }
-                    }
-                });
-
+                presenter.login(username,password);
                 break;
             case R.id.tv_register:
                 activityUtils.startActivity(RegisterActivity.class);
                 break;
         }
+    }
+
+    @Override
+    public void showProgress() {
+        /*强制关闭软键盘*/
+        activityUtils.hideSoftKeyboard();
+        if (dialogFragment.isVisible()) return;
+        dialogFragment.show(getSupportFragmentManager(), "progress_dialog_fragment");
+
+    }
+
+    @Override
+    public void hideProgress() {
+        dialogFragment.dismiss();
+    }
+
+    @Override
+    public void loginFailed() {
+        et_pwd.setText("");
+    }
+
+    @Override
+    public void loginSussed() {
+        activityUtils.startActivity(MainActivity.class);
+        finish();
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        activityUtils.showToast(msg);
     }
 }

@@ -38,4 +38,9 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //Gson
     compile 'com.google.code.gson:gson:2.8.0'
+    //mobsy。MVP
+    compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
+    //ImageLoader
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
 }

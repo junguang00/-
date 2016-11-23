@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.ActivityUtils;
-import com.fuicuiedu.idedemo.easyshop_demo.user.LoginActivity;
+import com.fuicuiedu.idedemo.easyshop_demo.main.me.personinfo.PersonInfoActivity;
+import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
+import com.fuicuiedu.idedemo.easyshop_demo.user.login.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,12 +52,35 @@ public class MeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // TODO: 2016/11/16 判断用户是否登录，更改用户头像并且显示用户名 
+        if (CachePreferences.getUser().getName() == null) return;
+        if (CachePreferences.getUser().getNick_Name() == null){
+            tv_login.setText(getResources().getString(R.string.please_input_nickname));
+        }else{
+            tv_login.setText(CachePreferences.getUser().getNick_Name());
+        }
+        // TODO: 2016/11/23 0023 设置头像待实现
     }
 
     @OnClick({R.id.iv_user_head, R.id.tv_person_info, R.id.tv_login, R.id.tv_person_goods, R.id.tv_goods_upload})
-    public void onClick() {
-        // TODO: 2016/11/16 判断用户是否登录，来确定跳转位置
-        activityUtils.startActivity(LoginActivity.class);
+    public void onClick(View view) {
+        if (CachePreferences.getUser().getName() == null){
+            activityUtils.startActivity(LoginActivity.class);
+            return;
+        }
+        switch (view.getId()){
+            case R.id.tv_login:
+            case R.id.iv_user_head:
+            case R.id.tv_person_info:
+                activityUtils.startActivity(PersonInfoActivity.class);
+                break;
+            case R.id.tv_person_goods:
+                activityUtils.showToast("我的商品 待实现");
+//                activityUtils.startActivity(PersonGoodsActivity.class);
+                break;
+            case R.id.tv_goods_upload:
+                activityUtils.showToast("商品上传 待实现");
+//                activityUtils.startActivity(GoodsLoadActivity.class);
+                break;
+        }
     }
 }

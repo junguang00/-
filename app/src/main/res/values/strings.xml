@@ -75,4 +75,6 @@
     <string name="menu_book">图书</string>
     <string name="menu_gift">礼品</string>
     <string name="menu_other">其它</string>
+
+    <string name="please_input_nickname">请输入昵称</string>
 </resources>

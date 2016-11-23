@@ -1,5 +1,6 @@
 package com.fuicuiedu.idedemo.easyshop_demo.network;
 
+import com.fuicuiedu.idedemo.easyshop_demo.model.User;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 
 import okhttp3.Call;
 import okhttp3.FormBody;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -20,6 +22,7 @@ public class EasyShopClient {
 
     private static EasyShopClient easyShopClient;
     private OkHttpClient okHttpClient;
+    private Gson gson;
 
     private EasyShopClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -28,6 +31,8 @@ public class EasyShopClient {
         okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .build();
+
+        gson = new Gson();
     }
 
     public static EasyShopClient getInstance() {
@@ -72,6 +77,25 @@ public class EasyShopClient {
                 .build();
         Request request = new Request.Builder()
                 .url(EasyShopApi.BASE_URL + EasyShopApi.LOGIN)
+                .post(requestBody)
+                .build();
+        return okHttpClient.newCall(request);
+    }
+
+    /**
+     * 更新
+     * <p>
+     * post
+     *
+     * @param user 用户实体类
+     */
+    public Call uploadUser(User user) {
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("user", gson.toJson(user))
+                .build();
+        Request request = new Request.Builder()
+                .url(EasyShopApi.BASE_URL + EasyShopApi.UPDATA)
                 .post(requestBody)
                 .build();
         return okHttpClient.newCall(request);

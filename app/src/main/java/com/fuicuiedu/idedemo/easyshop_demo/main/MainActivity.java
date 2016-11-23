@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.ActivityUtils;
+import com.fuicuiedu.idedemo.easyshop_demo.commons.LogUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.main.NoLoginFragment;
 import com.fuicuiedu.idedemo.easyshop_demo.main.me.MeFragment;
 import com.fuicuiedu.idedemo.easyshop_demo.main.shop.ShopFragment;
+import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -61,9 +63,13 @@ public class MainActivity extends AppCompatActivity {
     private void init(){
         //刚进来默认选择市场
         textViews[0].setSelected(true);
-        // TODO 应该判断是否已经登录,从而选择要设置的适配器
-        viewPager.setAdapter(unLoginAdapter);
-        viewPager.setCurrentItem(0);
+        if (CachePreferences.getUser().getName() == null) {
+            viewPager.setAdapter(unLoginAdapter);
+            viewPager.setCurrentItem(0);
+        } else {
+            viewPager.setAdapter(loginAdapter);
+            viewPager.setCurrentItem(0);
+        }
 
         //viewpager添加滑动事件
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -109,6 +115,31 @@ public class MainActivity extends AppCompatActivity {
             return 4;
         }
     };
+
+    private FragmentStatePagerAdapter loginAdapter = new
+            FragmentStatePagerAdapter(getSupportFragmentManager()) {
+                @Override
+                public Fragment getItem(int position) {
+                    switch (position){
+                        case 0:
+                            return new ShopFragment();
+                        case 1:
+                            // TODO: 2016/11/23 0023 接入环信后，待操作
+                            return new NoLoginFragment();
+                        case 2:
+                            // TODO: 2016/11/23 0023 接入环信后，待操作
+                            return new NoLoginFragment();
+                        case 3:
+                            return new MeFragment();
+                    }
+                    return null;
+                }
+
+                @Override
+                public int getCount() {
+                    return 4;
+                }
+            };
 
 
     //textView点击事件

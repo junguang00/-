@@ -55,5 +55,4 @@ public class CachePreferences {
         user.setNick_Name(preferences.getString(KEY_USER_NICKNAME, null));
         return user;
     }
-
 }
