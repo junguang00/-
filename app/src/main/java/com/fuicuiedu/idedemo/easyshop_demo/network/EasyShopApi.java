@@ -16,6 +16,6 @@ public class EasyShopApi {
     //登录接口
     static String LOGIN = "UserWeb?method=login";
 
-    //更新接口
+    //更新接口(更新昵称，用户头像)
     static String UPDATA = "UserWeb?method=update";
 }

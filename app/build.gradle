@@ -42,5 +42,11 @@ dependencies {
     compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
     //ImageLoader
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    //图片裁剪的库
+    compile 'org.hybridsquad.android.photocropper:library:2.1.0'
+    //上拉刷新，下载加载的库
+    compile 'in.srain.cube:ptr-load-more:1.0.2'
+    //recyclerview
+    compile 'jp.wasabeef:recyclerview-animators:2.2.3'
 
 }

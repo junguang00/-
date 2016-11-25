@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.ActivityUtils;
+import com.fuicuiedu.idedemo.easyshop_demo.components.AvatarLoadOptions;
 import com.fuicuiedu.idedemo.easyshop_demo.main.me.personinfo.PersonInfoActivity;
 import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
+import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopApi;
 import com.fuicuiedu.idedemo.easyshop_demo.user.login.LoginActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +61,10 @@ public class MeFragment extends Fragment {
         }else{
             tv_login.setText(CachePreferences.getUser().getNick_Name());
         }
-        // TODO: 2016/11/23 0023 设置头像待实现
+        /*设置头像*/
+        ImageLoader.getInstance()
+                .displayImage(EasyShopApi.IMAGE_URL + CachePreferences.getUser().getHead_Image(),
+                        iv_user_head, AvatarLoadOptions.build());
     }
 
     @OnClick({R.id.iv_user_head, R.id.tv_person_info, R.id.tv_login, R.id.tv_person_goods, R.id.tv_goods_upload})

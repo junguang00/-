@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 
 /**
- * Created by Administrator on 2016/11/15 0015.
+ * 商城展示的fragment
  */
 
 public class ShopFragment extends Fragment {
