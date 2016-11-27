@@ -28,6 +28,7 @@ public class EasyShopApi {
     //删除商品
     static final String DELETE = "GoodsServlet?method=delete";
 
-
+    //上传商品
+    static final String UPLOADGOODS = "GoodsServlet?method=add";
 
 }
