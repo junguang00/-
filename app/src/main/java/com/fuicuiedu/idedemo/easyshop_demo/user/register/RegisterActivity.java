@@ -1,7 +1,6 @@
 package com.fuicuiedu.idedemo.easyshop_demo.user.register;
 
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -13,30 +12,15 @@ import android.widget.EditText;
 
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.ActivityUtils;
-import com.fuicuiedu.idedemo.easyshop_demo.commons.LogUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.RegexUtils;
 import com.fuicuiedu.idedemo.easyshop_demo.components.AlertDialogFragment;
 import com.fuicuiedu.idedemo.easyshop_demo.components.ProgressDialogFragment;
 import com.fuicuiedu.idedemo.easyshop_demo.main.MainActivity;
-import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
-import com.fuicuiedu.idedemo.easyshop_demo.model.User;
-import com.fuicuiedu.idedemo.easyshop_demo.model.UserResult;
-import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
-import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
-import com.google.gson.Gson;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class RegisterActivity extends MvpActivity<RegisterView,RegisterPersenter> implements RegisterView{
 

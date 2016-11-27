@@ -12,7 +12,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public abstract class UICallback implements Callback {
+public abstract class UICallBack implements Callback {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
 

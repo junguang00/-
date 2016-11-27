@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.fuicuiedu.idedemo.easyshop_demo">
 
-
-    <!--网络权限-->
+    <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--相机权限-->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <!--SD卡读写权限-->
+    <!-- 相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- SD卡读写权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -32,7 +31,9 @@
         <activity android:name=".user.login.LoginActivity" />
         <activity android:name=".user.register.RegisterActivity" />
         <activity android:name=".main.me.personinfo.PersonInfoActivity" />
-        <activity android:name=".main.me.personinfo.NickNameActivity"></activity>
+        <activity android:name=".main.me.personinfo.NickNameActivity" />
+        <activity android:name=".main.shop.details.GoodsDetailActivity"></activity>
+        <activity android:name=".main.shop.details.GoodsDetailInfoActivity"/>
     </application>
 
 </manifest>

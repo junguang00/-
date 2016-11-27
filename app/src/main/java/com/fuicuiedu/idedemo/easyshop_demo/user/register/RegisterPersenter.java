@@ -4,7 +4,7 @@ import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
 import com.fuicuiedu.idedemo.easyshop_demo.model.User;
 import com.fuicuiedu.idedemo.easyshop_demo.model.UserResult;
 import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
-import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
+import com.fuicuiedu.idedemo.easyshop_demo.network.UICallBack;
 import com.google.gson.Gson;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
@@ -31,7 +31,7 @@ public class RegisterPersenter extends MvpNullObjectBasePresenter<RegisterView> 
         //加载动画
         getView().showProgress();
         call = EasyShopClient.getInstance().register(userName,password);
-        call.enqueue(new UICallback() {
+        call.enqueue(new UICallBack() {
             @Override
             public void onFailureInUi(Call call, IOException e) {
                 //隐藏动画

@@ -2,7 +2,6 @@ package com.fuicuiedu.idedemo.easyshop_demo.user.login;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -11,29 +10,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.fuicuiedu.idedemo.easyshop_demo.R;
 import com.fuicuiedu.idedemo.easyshop_demo.commons.ActivityUtils;
-import com.fuicuiedu.idedemo.easyshop_demo.components.AlertDialogFragment;
 import com.fuicuiedu.idedemo.easyshop_demo.components.ProgressDialogFragment;
 import com.fuicuiedu.idedemo.easyshop_demo.main.MainActivity;
-import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
-import com.fuicuiedu.idedemo.easyshop_demo.model.User;
-import com.fuicuiedu.idedemo.easyshop_demo.model.UserResult;
-import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
-import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
 import com.fuicuiedu.idedemo.easyshop_demo.user.register.RegisterActivity;
-import com.google.gson.Gson;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 public class LoginActivity extends MvpActivity<LoginView,LoginPersenter> implements LoginView{
     @BindView(R.id.et_username)

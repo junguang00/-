@@ -4,7 +4,7 @@ import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
 import com.fuicuiedu.idedemo.easyshop_demo.model.User;
 import com.fuicuiedu.idedemo.easyshop_demo.model.UserResult;
 import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
-import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
+import com.fuicuiedu.idedemo.easyshop_demo.network.UICallBack;
 import com.google.gson.Gson;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
@@ -25,7 +25,7 @@ public class PersonInfoPresenter extends MvpNullObjectBasePresenter<PersonInfoVi
     public void updataAvatar(File file){
         getView().showPrb();
         call = EasyShopClient.getInstance().uploadAvatar(file);
-        call.enqueue(new UICallback() {
+        call.enqueue(new UICallBack() {
             @Override
             public void onFailureInUi(Call call, IOException e) {
                 getView().hidePrb();

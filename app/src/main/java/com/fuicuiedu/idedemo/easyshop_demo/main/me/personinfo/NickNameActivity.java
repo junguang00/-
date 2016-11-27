@@ -13,7 +13,7 @@ import com.fuicuiedu.idedemo.easyshop_demo.model.CachePreferences;
 import com.fuicuiedu.idedemo.easyshop_demo.model.User;
 import com.fuicuiedu.idedemo.easyshop_demo.model.UserResult;
 import com.fuicuiedu.idedemo.easyshop_demo.network.EasyShopClient;
-import com.fuicuiedu.idedemo.easyshop_demo.network.UICallback;
+import com.fuicuiedu.idedemo.easyshop_demo.network.UICallBack;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -71,7 +71,7 @@ public class NickNameActivity extends AppCompatActivity {
         final User user = CachePreferences.getUser();
         user.setNick_Name(str_nickname);
         Call call = EasyShopClient.getInstance().uploadUser(user);
-        call.enqueue(new UICallback() {
+        call.enqueue(new UICallBack() {
             @Override
             public void onFailureInUi(Call call, IOException e) {
                 activityUtils.showToast(e.getMessage());
