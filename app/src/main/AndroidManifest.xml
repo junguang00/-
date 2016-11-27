@@ -32,8 +32,9 @@
         <activity android:name=".user.register.RegisterActivity" />
         <activity android:name=".main.me.personinfo.PersonInfoActivity" />
         <activity android:name=".main.me.personinfo.NickNameActivity" />
-        <activity android:name=".main.shop.details.GoodsDetailActivity"></activity>
-        <activity android:name=".main.shop.details.GoodsDetailInfoActivity"/>
+        <activity android:name=".main.shop.details.GoodsDetailActivity" />
+        <activity android:name=".main.shop.details.GoodsDetailInfoActivity" />
+        <activity android:name=".main.me.persiongoods.PersonGoodsActivity"></activity>
     </application>
 
 </manifest>
