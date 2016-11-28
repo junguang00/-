@@ -16,7 +16,7 @@ import okhttp3.Call;
  * Created by Damon on 2016/11/27.
  */
 
-public class GoodsDetailPresenter extends MvpNullObjectBasePresenter<GoodsDetailVIew> {
+public class GoodsDetailPresenter extends MvpNullObjectBasePresenter<GoodsDetailView> {
 
     //获取详情的call
     private Call getDetailCall;

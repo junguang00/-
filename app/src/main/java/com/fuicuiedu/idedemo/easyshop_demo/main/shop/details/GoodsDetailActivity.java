@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
-public class GoodsDetailActivity extends MvpActivity<GoodsDetailVIew,GoodsDetailPresenter> implements GoodsDetailVIew {
+public class GoodsDetailActivity extends MvpActivity<GoodsDetailView,GoodsDetailPresenter> implements GoodsDetailView {
 
     private static final String UUID = "uuid";
     /*从不同页面进入详情页面的状态值,0为默认值,1是我的商品页面进入*/
@@ -161,6 +161,7 @@ public class GoodsDetailActivity extends MvpActivity<GoodsDetailVIew,GoodsDetail
                     return;
                 }
                 // TODO: 2016/11/27 跳转到发送消息页面，环信实现
+                activityUtils.showToast("发消息，待实现");
                 break;
             case R.id.tv_goods_delete:
                 //弹一个警告，是否删除

@@ -7,10 +7,10 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
 import java.util.ArrayList;
 
 /**
- * Created by Damon on 2016/11/27.
+ * Created by Administrator on 2016/11/25 0025.
  */
 
-public interface GoodsDetailVIew extends MvpView {
+public interface GoodsDetailView extends MvpView {
 
     void showProgress();
 
